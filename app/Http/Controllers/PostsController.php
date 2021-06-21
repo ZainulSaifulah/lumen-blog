@@ -21,16 +21,6 @@ class PostsController extends Controller
   public function __construct()
   {
 
-    $this->middleware('auth', [
-      'only' => [
-        'getAllPosts',
-        'getPost',
-        'deletePost',
-        'insertPost',
-        'updatePost'
-      ]
-    ]);
-
   }
 
 /**
@@ -56,21 +46,7 @@ class PostsController extends Controller
     } else {
 
       $this->success = true;
-
-      foreach( $posts as $post )
-      {
-
-        $this->data[] = [
-          'id' => (int) $post->id,
-          'user_id' => (int) $post->user_id,
-          'title' => (string) $post->title,
-          'content' => (string) $post->content,
-          'created_at' => $post->created_at->toDateTimeString(),
-          'updated_at' => $post->updated_at->toDateTimeString()
-        ];
-
-      }
-
+      $this->data = $posts;
     }
 
     return $this->jsonResponse();
@@ -134,8 +110,6 @@ class PostsController extends Controller
       $this->data = [
         'message' => (string) 'Post not found'
       ];
-
-      $this->response_code = 404;
 
     } else {
 

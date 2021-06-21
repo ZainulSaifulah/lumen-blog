@@ -1,0 +1,114 @@
+version: "3.3"
+services:
+    api-gateway:
+        build:
+            context: .
+        restart: always
+        ports:
+            - "8000:80"
+        networks:
+            - lumen-blog
+        environment:
+            - DB_HOST=mysql
+            - OTHER_SERVICES=http://lumen-blog-1,http://lumen-blog-2,http://lumen-blog-3,http://lumen-blog-4
+    lumen-blog-1:
+        build:
+            context: .
+        restart: always
+        ports:
+            - "8001:80"
+        links:
+            - mysql-1
+        networks:
+            - lumen-blog
+        environment:
+            - DB_HOST=mysql-1
+            - OTHER_SERVICES=http://lumen-blog-2,http://lumen-blog-3,http://lumen-blog-4
+    lumen-blog-2:
+        build:
+            context: .
+        restart: always
+        ports:
+            - "8002:80"
+        links:
+            - mysql-2
+        networks:
+            - lumen-blog
+        environment:
+            - DB_HOST=mysql-2
+            - OTHER_SERVICES=http://lumen-blog-1,http://lumen-blog-3,http://lumen-blog-4
+    lumen-blog-3:
+        build:
+            context: .
+        restart: always
+        ports:
+            - "8003:80"
+        links:
+            - mysql-3
+        networks:
+            - lumen-blog
+        environment:
+            - DB_HOST=mysql-3
+            - OTHER_SERVICES=http://lumen-blog-1,http://lumen-blog-2,http://lumen-blog-4
+    lumen-blog-4:
+        build:
+            context: .
+        restart: always
+        ports:
+            - "8004:80"
+        links:
+            - mysql-4
+        networks:
+            - lumen-blog
+        environment:
+            - DB_HOST=mysql-4
+            - OTHER_SERVICES=http://lumen-blog-1,http://lumen-blog-2,http://lumen-blog-3
+    mysql-1:
+        image: mysql:5.7
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            - MYSQL_ROOT_PASSWORD=P@ssw0rd
+            - MYSQL_DATABASE=lumen-blog
+        ports:
+            - "33061:3306"
+        networks:
+            - lumen-blog
+    mysql-2:
+        image: mysql:5.7
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            - MYSQL_ROOT_PASSWORD=P@ssw0rd
+            - MYSQL_DATABASE=lumen-blog
+        ports:
+            - "33062:3306"
+        networks:
+            - lumen-blog
+    mysql-3:
+        image: mysql:5.7
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            - MYSQL_ROOT_PASSWORD=P@ssw0rd
+            - MYSQL_DATABASE=lumen-blog
+        ports:
+            - "33063:3306"
+        networks:
+            - lumen-blog
+    mysql-4:
+        image: mysql:5.7
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            - MYSQL_ROOT_PASSWORD=P@ssw0rd
+            - MYSQL_DATABASE=lumen-blog
+        ports:
+            - "33064:3306"
+        networks:
+            - lumen-blog
+networks:
+    lumen-blog:
+        driver: bridge
+
+        
