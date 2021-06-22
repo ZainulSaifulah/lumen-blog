@@ -46,7 +46,7 @@ class PostsController extends Controller
     } else {
 
       $this->success = true;
-      $this->data = $posts;
+      $this->data = $posts->forPage(1, 20);
     }
 
     return $this->jsonResponse();
