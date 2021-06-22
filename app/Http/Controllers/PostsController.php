@@ -41,7 +41,7 @@ class PostsController extends Controller
         'message' => (string) 'No posts found'
       ];
 
-      $this->response_code = 404;
+      $this->response_code = 200;
 
     } else {
 
@@ -72,7 +72,7 @@ class PostsController extends Controller
         'message' => (string) 'Post not found'
       ];
 
-      $this->response_code = 404;
+      $this->response_code = 200;
 
     } else {
 
@@ -191,7 +191,7 @@ class PostsController extends Controller
         'message' => (string) 'Post not found'
       ];
 
-      $this->response_code = 404;
+      $this->response_code = 200;
 
     } else {
 
